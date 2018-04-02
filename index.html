@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <title>Noob-book</title>
+        <link rel="stylesheet" type="text/css"  href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body onload="start()" onscroll="loadPosts()">
+        <h1 class="pageTopHeading">noobook</h1>
+        <div class="friendList">
+            <h3 class="headingStarred">STARRED FRIENDS</h3>
+                <div id="starredFriendsDiv"></div>
+        </div>
+        <div id="allPosts" class="postsDiv">
+            
+        </div>
+
+        <script>
+            function start(){
+                loadPosts();
+                loadStarredFriendList();
+            }
+            var numOfTotalPosts=0;
+            var stopReq = false;
+            function loadPosts(){
+                if (stopReq == false){
+                    var xmlhttp;
+				    if (window.XMLHttpRequest){
+					    xmlhttp = new XMLHttpRequest();
+				    }
+				    else{
+					    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				    }
+				
+				    xmlhttp.onreadystatechange = function(){
+					    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                            document.getElementById("allPosts").insertAdjacentHTML('beforeend',xmlhttp.responseText);
+                            var numOfPost2 = document.getElementById("allPosts").childElementCount;
+                            if (numOfPost2>numOfTotalPosts){
+                                numOfTotalPosts = numOfPost2;
+                            }
+                            else{
+                                stopReq = true;
+                            }
+					    }
+				    }
+
+                    var numOfPost = document.getElementById("allPosts").childElementCount;
+                    xmlhttp.open("GET", "handlePostDisplay.php?numOfPosts="+numOfPost,false);
+                    xmlhttp.send();
+                }
+            }
+
+            function postComment(elem){
+                var xmlhttp;
+				if (window.XMLHttpRequest){
+					xmlhttp = new XMLHttpRequest();
+				}
+				else{
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				xmlhttp.onreadystatechange = function(){
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        document.getElementById(elem.id).insertAdjacentHTML('beforebegin',xmlhttp.responseText);
+                    }
+                }
+
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if(dd<10) {
+                    dd = '0'+dd
+                } 
+
+                if(mm<10) {
+                    mm = '0'+mm
+                } 
+
+                today = dd + '-' + mm + '-' + yyyy;
+
+                xmlhttp.open("GET","handleComments.php?commContent="+elem.value+"&postID="+elem.id+"&time="+today,true);
+                xmlhttp.send();
+            }
+
+            function loadStarredFriendList(){
+                var xmlhttp;
+				if (window.XMLHttpRequest){
+					xmlhttp = new XMLHttpRequest();
+				}
+				else{
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        document.getElementById("starredFriendsDiv").innerHTML = xmlhttp.responseText;
+                    }
+                }
+                xmlhttp.open("GET","handleFriendListDisplay.php?list=starred",true);
+                xmlhttp.send();
+            }
+
+            function starFriend(friendID){
+                var xmlhttp;
+				if (window.XMLHttpRequest){
+					xmlhttp = new XMLHttpRequest();
+				}
+				else{
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        var imgs = document.getElementsByTagName("img");
+                        for (var i=0; i<imgs.length; i++){
+                            if (imgs[i].id.indexOf("Fri"+friendID) > -1){
+                                imgs[i].src = xmlhttp.responseText;
+                            }
+                        }
+                        loadStarredFriendList();
+                    }
+                }
+                xmlhttp.open("GET","handleStarringFriend.php?friendID="+friendID,true);
+                xmlhttp.send();
+            }
+        </script>
+    </body>
+</html>

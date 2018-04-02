@@ -1,0 +1,96 @@
+.pageTopHeading{
+    text-align: center;
+    color: #111; 
+    font-family: 'Helvetica Neue', sans-serif; 
+    font-size: 100px; 
+    font-weight: bold; 
+    letter-spacing: -1px; 
+    line-height: 1;
+    margin-left: 200px;
+    margin-bottom: 0px;
+}
+
+.friendList{
+    float: left;
+    width: 200px;
+    margin-right: 8px;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 50px;
+}
+
+.postsDiv{
+    float: left;
+    margin: 8px;
+    margin-left: 208px;
+}
+
+.postImages{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+body{
+    margin: 0px;
+    background-color: #feb236;
+}
+
+.headingStarred{
+    color: white;
+    font-family: 'Raleway',sans-serif;
+    font-size: 25px; 
+    font-weight: 300; 
+    line-height: 32px;
+    margin-left: 8px;
+}
+
+.starredEntries{
+    color: white;
+    margin-left: 8px;
+    font-family: 'Raleway',sans-serif;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 580px){
+    body{
+        margin: 0px;
+        background-color: #feb236;
+    }
+
+    .pageTopHeading{
+        text-align: center;
+        color: #111; 
+        font-family: 'Helvetica Neue', sans-serif; 
+        font-size: 90; 
+        font-weight: bold; 
+        letter-spacing: -1px; 
+        line-height: 1;
+        margin-left: 0px;
+        margin-bottom: 8px;
+    }
+
+    .friendList{
+        float: none;
+        width: 100%;
+        margin-right: 0px;
+        height: auto;
+        position: relative;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 0px;
+    }
+
+    .postsDiv{
+        float: none;
+        margin: 8px;
+        margin-left: 8px;
+    }
+}
