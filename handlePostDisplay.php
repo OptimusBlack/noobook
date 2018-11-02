@@ -1,5 +1,5 @@
 <?php
-    $conn = mysqli_connect('sophia.cs.hku.hk', 'mlakhani', 'hku2020') or die('Error!'.mysqli_error($conn));
+    $conn = mysqli_connect('sophia.cs.hku.hk', $USER, $PSW) or die('Error!'.mysqli_error($conn));
     mysqli_select_db($conn,	'mlakhani') or die('Error!'.mysqli_error($conn));
     $result = mysqli_query($conn, 'SELECT * FROM posts') or die ('Error!'.mysqli_error($conn));
     $numRows = mysqli_num_rows($result);
